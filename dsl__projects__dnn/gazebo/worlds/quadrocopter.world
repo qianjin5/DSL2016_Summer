@@ -1,0 +1,49 @@
+<?xml version="1.0" ?>
+<sdf version="1.4">
+  <world name="default">
+    <scene>
+      <sky>
+        <clouds>
+          <speed>25</speed>
+        </clouds>
+      </sky>
+    </scene>
+
+    <!-- A global light source -->
+    <include>
+      <uri>model://sun</uri>
+    </include>
+    <!-- A ground plane -->
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+
+    <!-- A quadrocopter! -->
+    <!--  
+    <include>
+      <uri>model://quadrotor_ardrone</uri>
+    </include>
+    -->
+   
+    <!--
+    <model name="quadrotor">
+      <pose>0 0 0  0 0 0</pose>
+      <static>true</static>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh filename="package://dsl__projects__simulator/gazebo/quadrotor_4.dae" />
+          </geometry>
+        </visual>
+      </link>
+    </model>
+    -->
+
+    <!-- A cricket ball to follow 
+    <include>
+      <uri>model://cricket_ball</uri>
+      <static>true</static>
+    </include>
+-->
+  </world>
+</sdf>

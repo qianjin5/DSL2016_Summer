@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+<!-- This file would normally contain the ARDrone Driver (from the ardrone_autonomy package) but as this is a simulation 
+     it is not required. Instead we instantiate only the 3 relevant parameters to flying the quad in simulation, and we 
+     hardcode the '_driver' addition to the vicon model name to be consistent with how the quads are flown in real life.
+-->
+
+<launch>
+    <!-- set externally so the ardrone command bridge can view this value -->
+    <param name="ardrone_driver/euler_angle_max" value="0.32" /> <!-- maximum allowable body angle in radians = 5 degrees, was 0.21 -->
+    <param name="ardrone_driver/control_vz_max" value="2000.0" /> <!-- maximum z velocity in mm/sec. ARDrone just needs it this way! -->
+    <param name="ardrone_driver/control_yaw" value="3.14" /> <!-- maximum rotation rate in radians/sec = 40 degrees per second (1/9 rev/sec) -->
+
+    <param name="do_calibrate" value="0.0" /> <!-- Flag to calibrate drone upon takeoff -->
+</launch>

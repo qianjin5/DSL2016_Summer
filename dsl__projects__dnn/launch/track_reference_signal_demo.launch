@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- This file can launch multiple drones that will track a reference signal
+     Will work on ways to change the reference signal for different drones.
+-->
+
+<launch>
+
+  <!-- This launch file instantiates the world in which the drones will fly in
+       It's basically just an empty world, but we can add more complicated worlds later...
+  -->
+  <include file="$(find dsl__estimation_vicon)/launch/vicon_bridge.launch" />
+
+
+    <group ns="Drone1">
+        <include file="$(find dsl__projects__dnn)/launch/launch_quadrotor_multi.launch">
+            <arg name="model" value="ARDroneAdrian"/>
+	        <arg name="ip_address" value="192.168.1.1"/>
+        </include>
+
+	    <!-- This is the reference signal. The user may change this to their requirements.-->
+      	<node name="reference_signal" pkg="dsl__projects__dnn" type="reference_signal.py" output="screen" required="True">
+      	</node>
+      	<!-- This is the DNN correction signal that the drone will track.-->
+      	<node name="correction_signal" pkg="dsl__projects__dnn" type="correction_signal.py" output="screen" required="True">
+	    </node>
+        <node name="plot_window" pkg="dsl__projects__dnn" type="plot_window.pyw" output="screen" required="True">
+	    </node>
+    </group>
+
+</launch>

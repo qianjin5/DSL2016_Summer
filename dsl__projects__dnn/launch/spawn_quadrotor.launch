@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+
+ <launch>
+   <arg name="quad_sdf" default="$(find dsl__projects__dnn)/gazebo/models/quadrotor_ardrone/model.sdf"/>
+   <arg name="tag_des_sdf"  default="$(find dsl__projects__dnn)/gazebo/models/path_marker/model.sdf"/>
+   <arg name="tag_ref_sdf"  default="$(find dsl__projects__dnn)/gazebo/models/ref_marker/model.sdf"/>
+   <arg name="x" default="0.0"/>
+   <arg name="y" default="0.0"/>
+   <arg name="z" default="0.0"/>
+   <arg name="R" default="0.0"/>
+   <arg name="P" default="0.0"/>
+   <arg name="Y" default="0.0"/>
+   <arg name="quad_name" default="quad_drone"/>
+   <arg name="tag_name_des" default="$(arg quad_name)_tag_des"/>
+   <arg name="tag_name_ref" default="$(arg quad_name)_tag_ref"/>
+
+   <!-- send the robot XML to param server -->
+   <param name="robot_description" command="$(find xacro)/xacro.py '$(arg quad_sdf)'" />
+   
+   <!-- push robot_description to factory and spawn robot in gazebo -->
+   <node name="$(arg quad_name)" pkg="gazebo_ros" type="spawn_model"
+   args="-param robot_description
+   -sdf
+   -x '$(arg x)'
+   -y '$(arg y)'
+   -z '$(arg z)'
+   -R '$(arg R)'
+   -P '$(arg P)'
+   -Y '$(arg Y)'
+   -model '$(arg quad_name)' "
+     respawn="false" output="screen"/>
+
+   <!-- send the robot XML to param server -->
+   <param name="tag_ref_description" command="$(find xacro)/xacro.py '$(arg tag_ref_sdf)'" />
+   <param name="tag_des_description" command="$(find xacro)/xacro.py '$(arg tag_des_sdf)'" />
+
+   <!-- push robot_description to factory and spawn robot in gazebo -->
+   <node name="$(arg tag_name_des)" pkg="gazebo_ros" type="spawn_model"
+   args="-param tag_des_description
+   -sdf
+   -x '$(arg x)'
+   -y '$(arg y)'
+   -z '$(arg z)'
+   -R '$(arg R)'
+   -P '$(arg P)'
+   -Y '$(arg Y)'
+   -model '$(arg tag_name_des)' "
+     respawn="false" output="screen"/>
+     
+   <node name="$(arg tag_name_ref)" pkg="gazebo_ros" type="spawn_model"
+   args="-param tag_ref_description
+   -sdf
+   -x '$(arg x)'
+   -y '$(arg y)'
+   -z '$(arg z)'
+   -R '$(arg R)'
+   -P '$(arg P)'
+   -Y '$(arg Y)'
+   -model '$(arg tag_name_ref)' "
+     respawn="false" output="screen"/>
+     
+ </launch>
+   

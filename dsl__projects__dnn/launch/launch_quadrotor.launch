@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- This file launches the necessary nodes to simulate the flying of a quadrotor. 
+     The idea is that this launch file can be called within a namespace so that multiple drones
+     can be launched at the same time without naming conflicts
+-->
+
+<launch>  
+
+  <arg name="model"  default="ARDroneDefault" />
+  <arg name="tag_des_model"  default="$(arg model)_tag_des" />
+  <arg name="tag_ref_model"  default="$(arg model)_tag_ref" />
+  <arg name="init_x"     default="0.0"/>
+  <arg name="init_y"     default="0.0"/>
+
+  <param name="model" value="$(arg model)"/>
+
+  <!-- ######################    Drivers         ########################################## -->
+  <!-- AR.Drone Driver -->
+  <include file="$(find dsl__projects__dnn)/launch/ardrone_driver_global_ctrl_params.launch"/>
+
+  <!-- Publishes coordinates of drone to the current_coordinates topic -->
+  <node name="vicon_coordinates" pkg="dsl__estimation_vicon" type="vicon.py" output="screen" required="True"/>
+ 
+  <!-- ######################    Controller      ########################################## -->
+
+  <!-- CONTROLLER -->
+  <node name="nonlinear_controller" pkg="dsl__projects__dnn" type="nonlinear_controller_cal.py" output="screen" required="True">
+    <param name="tau_x" value="1.7" /> <!-- 1.7 -->
+    <param name="tau_y" value="1.7" /> <!-- 1.7 -->
+    <param name="tau_z" value="1.0" /> <!-- 1.0 -->
+    <param name="tau_w" value="0.5" /> <!-- 0.5 -->
+    <param name="zeta" value="0.707" />  <!-- 0.707 -->
+  </node>
+
+  <!-- ######################    AR.Drone Bridges      #################################### -->
+
+  <!-- ARDrone command bridge -->
+  <node pkg="dsl__utilities__ardrone" type="dsl_ardrone_bridge" name="dsl_ardrone_bridge" output="screen" required="True">
+    <param name="active_command_offsets_enable " type="bool" value="false"/>
+    <param name="offset_buffer_size" type="int" value="400"/>
+  </node>
+
+  <!-- The Drone Simulator! This node is responsible for the inner control loop and the drone dynamics -->
+  <node name="quadsim" pkg="dsl__projects__dnn" type="quadsim.py" output="screen" required="True">
+    <param name="init_x" value="$(arg init_x)" /> 
+    <param name="init_y" value="$(arg init_y)" /> 
+  </node>  
+
+  <!-- The node for delaying the outgoing message (comp -> quad) -->
+  <node name="outgoing_delay" pkg="dsl__projects__dnn" type="outgoing_delay.py" output="screen" required="True"/>
+
+  <!-- Spawn simulated quadrotor uav -->
+  <include file="$(find dsl__projects__dnn)/launch/spawn_quadrotor.launch" >
+    <arg name="quad_sdf" value="$(find dsl__projects__dnn)/gazebo/models/quadrotor_ardrone/model.sdf"/>
+    <arg name="tag_des_sdf"  value="$(find dsl__projects__dnn)/gazebo/models/path_marker/model.sdf"/>
+    <arg name="tag_ref_sdf"  value="$(find dsl__projects__dnn)/gazebo/models/ref_marker/model.sdf"/>
+    <arg name="quad_name" value="$(arg model)"/>
+    <arg name="tag_name_des"  value="$(arg tag_des_model)"/>
+    <arg name="tag_name_ref"  value="$(arg tag_ref_model)"/>
+  </include>
+
+</launch>

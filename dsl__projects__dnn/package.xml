@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>dsl__projects__dnn</name>
+  <version>0.0.0</version>
+  <description>A simulator that models the dynamics of a drone</description>
+
+  <!-- One maintainer tag required, multiple allowed, one person per tag --> 
+  <!-- Example:  -->
+  <!-- <maintainer email="jane.doe@example.com">Jane Doe</maintainer> -->
+  <maintainer email="adrian.esser@robotics.utias.utoronto.ca">Adrian Esser</maintainer>
+  <maintainer email="yl.wu@robotics.utias.utoronto.ca">David Wu</maintainer>
+
+  <!-- One license tag required, multiple allowed, one license per tag -->
+  <!-- Commonly used license strings: -->
+  <!--   BSD, MIT, Boost Software License, GPLv2, GPLv3, LGPLv2.1, LGPLv3 -->
+  <license>DSL</license>
+  <!-- Dependencies -->
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <depend>roscpp</depend>
+  <depend>rospy</depend>
+  <depend>std_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>dsl__utilities__msg</depend>
+  <depend>dsl__utilities__ardrone</depend>
+
+  <build_depend>message_generation</build_depend>
+  <exec_depend>message_runtime</exec_depend>
+  
+
+
+  <!-- The export tag contains other, unspecified, tags -->
+  <export>
+    <!-- Other tools can request additional information be placed here -->
+
+  </export>
+</package>
