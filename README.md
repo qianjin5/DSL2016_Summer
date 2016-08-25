@@ -1,5 +1,11 @@
 ### Summer work at Dynamic Systems Lab, University of Toronto Institue for Aerospace Studies in 2016
 ### Aim to improve quadrotor's trajectory tracking performance using deep neural network
+### Based on UTIAS DSL Charlottetown deployment: Ubuntu 14.04.04 LTS and ROS Jade 
+### This is the basic version: only current desired state is used
+
+### Contents:
+- dsl__projects__dnn: to be placed in ~/charlottetown/dsl/src/, main package
+- saved_networks_quadrotor: to be placed in ~/.ros/, trained neural networks
 
 ### To install the package
 1. Place dsl__projects__dnn in ~/charlottetown/dsl/src/
@@ -24,12 +30,11 @@ roslaunch dsl__projects__dnn track_reference_signal_demo.launch
 3. Run main.py
 4. Copy saved_networks_quadrotor in the same directory to ~/.ros/
 
-#### This is the basic version: only current desired state is used
 
-#### Based on UTIAS DSL Charlottetown deployment: Ubuntu 14.04.04 LTS and ROS Jade 
 
-#### Contents:
-- dsl__projects__dnn: to be placed in ~/charlottetown/dsl/src/, main package
-- saved_networks_quadrotor: to be placed in ~/.ros/, trained neural networks
+
+
+
+
 
 
