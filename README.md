@@ -1,5 +1,5 @@
-# Summer work at Dynamic Systems Lab, University of Toronto Institue for Aerospace Studies in 2016
-# Aim to improve quadrotor's trajectory tracking performance using deep neural network
+### Summer work at Dynamic Systems Lab, University of Toronto Institue for Aerospace Studies in 2016
+### Aim to improve quadrotor's trajectory tracking performance using deep neural network
 
 ### To install the package
 1. Place dsl__projects__dnn in ~/charlottetown/dsl/src/
