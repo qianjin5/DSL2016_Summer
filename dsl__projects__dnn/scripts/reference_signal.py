@@ -222,7 +222,7 @@ class ReferenceSignal(object):
                
 
     def init_data(self):
-        # initialize StateData variables
+        # initialize MultiStateData variables
         pub_data = []
 	for i in range(self.history_length):
 	    data = StateData()
@@ -252,11 +252,11 @@ class ReferenceSignal(object):
 	for i in range(self.history_length):
 	    
 	    if i < 2:
-		# current and +0.6s
+		# current and +0.6s / 4 time steps
 		self.pub_data.data[i].header.stamp = time_stamp + rospy.Duration(i * self.time_step * 10 * 4)
 		sim_time = time + i * self.time_step * 10 * 4 - self.start_time
 	    else:
-		# +0.9s
+		# +0.9s / 6 time steps
 		self.pub_data.data[i].header.stamp = time_stamp + rospy.Duration(i * self.time_step * 10 * 3)
 		sim_time = time + i * self.time_step * 10 * 3 - self.start_time
 		
@@ -268,9 +268,7 @@ class ReferenceSignal(object):
             self.init_cond = self.gen_data(self.init_data()[0], 0)
             self.pub_init.publish(self.init_cond)
         
-    def gen_data(self, data, time):
-        #if self.state == DroneStatus.Flying:		
-            #print 'Sim time: ', time		
+    def gen_data(self, data, time):	
             
         if self.user_traj[0] == 1:   
              # if not using user-draw trajectory, run default one 
@@ -305,7 +303,7 @@ class ReferenceSignal(object):
 	                
             data.x = amplitude * cos(omega1*time) - amplitude
             data.y = amplitude * cos(omega2*time) - amplitude
-            data.z = (amplitude * cos(omega3*time) - amplitude + 4.0)/2.0
+            data.z = (amplitude * cos(omega3*time) - amplitude + 4)/2.0
     
             data.vx = -omega1 * amplitude * sin(omega1*time)
             data.vy = -omega2 * amplitude * sin(omega2*time)
@@ -358,7 +356,8 @@ class ReferenceSignal(object):
              
         
         #if self.state == DroneStatus.Flying:
-            #print (data.x,data.y,data.z)
+	    #print 'Current Time: ', time	
+            #print 'Desired Coord: ', (data.x,data.y,data.z)
             
         return data
 

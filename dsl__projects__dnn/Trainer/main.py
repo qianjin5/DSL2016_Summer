@@ -178,6 +178,7 @@ if __name__ == '__main__':
     
     D = generate_training_data("Experience_real")
     #D = generate_training_data("TrainingData")
+    #D = generate_training_data("Experience")
     
     
     agent = LearningAgent(True)

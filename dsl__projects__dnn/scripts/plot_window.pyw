@@ -1,9 +1,9 @@
 #!/usr/bin/env python2
 
-# Created by Jingxing Qian - Last update: Monday Aug.8, 2016
+# Created by Jingxing Qian - Last update: Monday Aug.25, 2016
 # Contact me: jingxing.qian@mail.utoronto.ca
 
-# This is a GUI control panel with toggles and real time plotting 
+# This is a Qt4-based GUI control panel with toggles and real time plotting 
 
 # Import the ROS and other libraries and files
 
@@ -35,6 +35,7 @@ import time
 class MainWidget(QtGui.QWidget):	
 	
 	def __init__(self, parent = None):		
+		# initialize 
 		super(MainWidget, self).__init__() 
 		self.initUI()
 		self.show()

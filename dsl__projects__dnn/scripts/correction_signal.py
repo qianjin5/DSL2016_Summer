@@ -9,7 +9,6 @@
 import roslib; roslib.load_manifest('dsl__projects__dnn')
 import rospy
 import numpy as np
-import math
 
 from std_msgs.msg import Empty, Int64MultiArray
 from ardrone_autonomy.msg import Navdata
@@ -77,6 +76,7 @@ class CorrectionSignal:
         # record as fly, default False
         self.rec_Exp = False
         self.experience = self.load_experience()
+        # controls interval between 2 recorded states, must agree with training program
         self.EXP_delay = 10
         self.pre_state = None
         
@@ -118,12 +118,12 @@ class CorrectionSignal:
             
                 
     def land_drone(self,msg):
-        print 'count: ', self.count
-        print 'exp: ', len(self.experience)
+        #print 'count: ', self.count
+        #print 'exp: ', len(self.experience)
         
-        # determine average error
-        avgerr = str(self.cumulative_error / self.count)
-        print '---Average Error: ' + avgerr + 'm---'
+        # determine RMS error
+        avgerr = str(np.sqrt(self.cumulative_error / self.count))
+        print '---RMS Error: ' + avgerr + 'm---'
         
         # write into local file
         f = open(trajinfopath, "r")
@@ -286,7 +286,6 @@ class CorrectionSignal:
                     if len(self.history_des) >= hist_size: 
                         data = np.array([])
 
-                        ##################
                         # extract states from desired trajectory
                         states = [self.conv_13(des_state.data[i]) for i in range(hist_size)]
                         # append current desired state
@@ -296,8 +295,6 @@ class CorrectionSignal:
                             # append future desired states
                             data = np.append(data, states[i][0:3] - temp[0:3])
                             data = np.append(data, states[i][3:])
-                        
-                        ##################
                         
                         # find the difference between reference state and desired state	
                         self.dstate = agent.getRef(data)
@@ -355,8 +352,7 @@ class CorrectionSignal:
             
             # determine current flight time
             timer = self.cur_time - self.start_time
-            
-            #if float('{:05.2f}'.format(timer)) % 0.5 == 0.0:
+
             if (timer < 0.50):
                 self.prev_time = 2*timer
             if (int(self.prev_time) != int(2*timer)):
@@ -366,7 +362,7 @@ class CorrectionSignal:
             
             if self.traj_start_time < timer < self.traj_end_time:
                 # determine cumulative error
-                self.cumulative_error += np.linalg.norm(self.desired_state[0:3] - self.curr_state[0:3])
+                self.cumulative_error += np.linalg.norm(self.desired_state[0:3] - self.curr_state[0:3]) ** 2
                 self.count += 1
                 
                 # for plotting

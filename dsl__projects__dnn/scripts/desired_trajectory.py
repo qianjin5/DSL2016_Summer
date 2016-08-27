@@ -228,7 +228,7 @@ class DesTraj:
 		head_traj.extend([take_off_state] * int(take_off_hover // time_step))
 		#print head_traj
 		#print "data[0] =", data[0]
-		starting_hover = finishing_hover = 3 #3 seconds to signal the starting and ending of trajectory-flying
+		starting_hover = finishing_hover = 4 #4 seconds to signal the starting and ending of trajectory-flying
 		if XY:
 			starting_hover_traj = [(traj[0][0], traj[0][1], 1.0, 0.0, 0.0, 0.0)] * int(starting_hover // time_step)
 			landing_hover_traj = [(traj[-1][0], traj[-1][1], 1.0, 0.0, 0.0, 0.0)] * int(finishing_hover // time_step)
@@ -237,7 +237,7 @@ class DesTraj:
 			landing_hover_traj = [(traj[-1][0], 0.0, traj[-1][1], 0.0, 0.0, 0.0)] * int(finishing_hover // time_step)
 		# move to starting position of the trajectory
 		# move to the landing state (same as take-off state)
-		moving_time = 3 #3 seconds
+		moving_time = 5 #5 seconds
 		moving_pts = int(moving_time // time_step)
 		#print "moving points =", moving_pts
 		for t in range(1, moving_pts + 1):
