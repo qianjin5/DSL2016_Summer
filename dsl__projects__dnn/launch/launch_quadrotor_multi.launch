@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- This file launches the necessary nodes to fly a quadrotor. 
+     The idea is that this launch file can be called within a namespace so that multiple drones
+     can be launched at the same time without naming conflicts
+-->
+
+<launch>  
+
+  <arg name="model"  default="ARDroneAdrian" />
+  <arg name="ip_address"   default="192.168.2.32" />
+  <param name="model"  value="$(arg model)" />
+
+
+  <!-- ######################    Drivers         ########################################## -->
+  <!-- AR.Drone Driver -->
+  <include file="$(find dsl__demo__wand_control)/launch/ardrone_driver_global_ctrl_params.launch">
+    <arg name="ip_address"  value="$(arg ip_address)" />
+
+  </include>
+
+  <!-- Publishes coordinates of drone to the current_coordinates topic -->
+  <node name="dsl_vicon" pkg="dsl__estimation_vicon" type="vicon.py" output="screen" required="True">
+    <param name="model"             value="$(arg model)"/>
+    <param name="tauEstTrans"       value="0.015"/>
+    <param name="tauEstTransDot"    value="0.040"/>
+    <param name="tauEstTransDotDot" value="0.500"/>
+    <param name="tauEstRot"         value="0.001"/>
+    <param name="tauEstRotDot"      value="0.025"/>
+  </node>
+
+  <!-- ######################    Controller      ########################################## -->
+
+  <!-- CONTROLLER -->
+  <node name="nonlinear_controller" pkg="dsl__projects__dnn" type="nonlinear_controller_cal.py" output="screen" required="True">
+    <param name="tau_x" value="1.7" /> <!-- 1.7 -->
+    <param name="tau_y" value="1.7" /> <!-- 1.7 -->
+    <param name="tau_z" value="1.0" /> <!-- 1.0 -->
+    <param name="tau_w" value="0.5" /> <!-- 0.5 -->
+    <param name="zeta" value="0.707" />  <!-- 0.707 -->
+  </node>
+
+  <!-- ######################    AR.Drone Bridges      #################################### -->
+
+  <!-- ARDrone measurement bridge -->
+  <!-- Parameters: 
+       PWM_map = [a, b] : a*PWM_i + b = sqrt(Thrust_i) for each motor (k_i which is calibrated accounts for variation in prop efficiency -->
+  <node pkg="dsl__utilities__ardrone" type="dsl_ardrone_bridge_meas" name="dsl_ardrone_bridge_meas" output="screen">
+    <rosparam param="PWM_map">[0.0040, 0.3205]</rosparam> 
+  </node>
+
+  <!-- ARDrone command bridge -->
+  <node pkg="dsl__utilities__ardrone" type="dsl_ardrone_bridge" name="dsl_ardrone_bridge" output="screen">
+    <param name="active_command_offsets_enable " type="bool" value="false"/>
+    <param name="offset_buffer_size" type="int" value="400"/>
+    <param name="max_vicon_dt" value="0.5"/> 
+  </node>
+
+  <!-- ######################    Calibration         ###################################### -->
+
+  <!-- Service to calibrate orientation offset at hover -->
+  
+  <node pkg="dsl__utilities__ardrone" type="dsl_calibrateZeroPose" name="dsl_calibrate_zero_pose" output="screen">
+  </node>
+
+  <!-- Service to check if the drone is at hover -->
+  <node pkg="dsl__utilities__ardrone" type="dsl_check_hover" name="dsl_check_hover" output="screen">
+  </node>
+
+  <!-- Service to call all calibration services -->
+  <node pkg="dsl__utilities__ardrone" type="dsl_calibration_server" name="dsl_calibration_server" output="screen">
+    <param name="n_measurements" type="int"    value="4000"/>
+    <param name="pos_std_thresh" type="double" value="0.1"/>
+    <param name="acc_thresh"     type="double" value="0.1"/>
+    <param name="yaw_thresh"     type="double" value="0.1"/>
+  </node>
+
+</launch>

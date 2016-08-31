@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<launch>
+
+  <!-- This launch file instantiates the world in which the drones will fly in
+       It's basically just an empty world, but we can add more complicated worlds later...
+  -->
+  <include file="$(find dsl__projects__dnn)/launch/quadrocopter_world.launch"/>
+
+    <group ns="Drone1">
+        <include file="$(find dsl__projects__dnn)/launch/launch_quadrotor.launch">
+            <arg name="model" value="ARDroneFRA"/>
+	        <arg name="init_x"      value="0.0"/>
+            <arg name="init_y"      value="0.0"/>
+        </include>
+
+	<node name="path_gen" pkg="dsl__utilities__ardrone" type="path_gen3D.py" output="screen" required="False" respawn="True">
+	    <param name="global_origin" type="string" value="(0.0,0.0)"/>
+	    <param name="waypoints" value="(0.0,0.0,1.0,0.0) (2.0,0.0,1.0,0.0) (-2.0,0.0,1.0,0.0) (0.0,0.0,1.0,0.0) "/>
+	    <param name="waypoint_tol" value='0.3' />
+	    <param name="vel_fwd" value='2.0' />
+	    <param name="t_window" value="1.0" />
+	    <param name="control_yaw" value="3.14" /> 
+	</node>
+    </group>
+
+    <!-- 
+    <group ns="Drone2">
+        <include file="$(find dsl__projects__DNN)/launch/launch_quadrotor.launch">
+            <arg name="model" value="ARDroneAlpha"/>
+            <arg name="tag_model" value="ARDroneAlpha_tag"/>
+	        <arg name="init_x"     value="1.0"/>
+            <arg name="init_y"     value="1.0"/>
+        </include>
+
+      	<node name="path_gen" pkg="dsl__utilities__ardrone" type="path_gen3D.py" output="screen" required="False" respawn="True">
+	        <param name="global_origin" type="string" value="(0.0,0.0)"/>
+	        <param name="waypoints" value="(1.0,0.0,1.5,0.0) (2.0,0.0,1.5,1.47) (1.5,1.0,1.5,1.47) (1.0,0.0,1.5,0.0) (1.0,0.0,1.0,0.0) "/>
+	        <param name="waypoint_tol" value='0.1' />
+	        <param name="vel_fwd" value='1.0' />
+	        <param name="t_window" value="5.0" />
+	        <param name="control_yaw" value="3.14" />
+	    </node>
+    </group>
+    -->
+</launch>

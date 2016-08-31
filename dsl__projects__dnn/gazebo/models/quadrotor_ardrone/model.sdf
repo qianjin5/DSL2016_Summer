@@ -1,0 +1,15 @@
+<?xml version='1.0'?>
+<sdf version='1.4'>
+  <model name="quadrotor">
+      <pose>0 0 0  0 0 0</pose> 
+      <static>true</static>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <!-- <mesh><uri>file:///home/dsl4/banff/dsl/src/dsl__projects/dsl__projects__simulator/gazebo/quadrotor_4.dae</uri></mesh> -->
+            <mesh><uri>model://quadrotor_ardrone/meshes/quadrotor_4.dae</uri></mesh>
+          </geometry>
+        </visual>
+      </link>
+  </model>
+</sdf>

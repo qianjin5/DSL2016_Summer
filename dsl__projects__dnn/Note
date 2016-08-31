@@ -1,0 +1,18 @@
+1. Add the following code to the end of ~/charlottetown/dsl/src/dsl__central/dsl__utilities__ardrone/src/drone_video_display. __init__()
+   p.s. the command window has 3 buttons so stretch the window a little bit
+--------------------------------------------------------------
+    self.takeoff = QtGui.QCommandLinkButton('Take Off', self)
+    self.land = QtGui.QCommandLinkButton('Land', self)
+    self.DNN = QtGui.QCommandLinkButton('DNN Toggle', self)
+        
+    self.takeoff.clicked.connect(self.SendTakeoff)
+    self.takeoff.move(10,10)
+    self.land.clicked.connect(self.SendLand)
+    self.land.move(10,40)
+    self.DNN.clicked.connect(self.SendToggle)
+    self.DNN.move(10,70)
+--------------------------------------------------------------
+
+2. Put the network folder under ~/.ros  (it is a hidden folder)
+
+3. Generated data is also under ~/.ros

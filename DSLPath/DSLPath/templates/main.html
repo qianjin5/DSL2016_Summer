@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+	<title>DSLPath</title>
+	<link rel="shortcut icon" href="http://www.dynsyslab.org/wp-content/uploads/2013/08/favicon.ico" type="image/x-icon">
+	<link rel="stylesheet" href="static/style.css" type="text/css" media="all">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+<div id="header">
+	<div id="iconlinks_box">
+		<a href="http://www.dynsyslab.org"><div class="iconlink" id="DSLicon"></div></a>
+	</div>
+	<div id="titlearea">
+		<h1>DSLPath</h1>
+	</div>
+</div> <!--header ends-->
+
+<div id="content-wrap">
+	<div class="line">
+	<h4>Name your path: </h4>
+	<textarea rows="1" cols="30" id="trajName">Traj name</textarea>
+	</div>
+	
+	<div class="line">
+	<button type="button" class="button" id="clearButton"><h3>Clear</h3></button>
+	<button type="button" class="button" id="submitButton"><h3>Submit</h3></button>
+	</div>
+	<div id="canvasDiv"></div>
+	<div class="line"><h6 id="txtHint"> </h6></div>
+	
+	<div class="line" id="resultNoDNN">
+		<div id="resData_NoDNN_display"></div>
+	</div>
+	
+	<div class="line" id="resultWithDNN">
+		<div id="resData_DNN_display"></div>
+	</div>
+</div> <!--content-wrap ends-->
+</body>
+
+<script src={{ url_for('static', filename='plot_result.js') }}> </script>
+<script src={{ url_for('static', filename='action.js') }}> </script>
+<script src="https://d3js.org/d3.v3.min.js"></script>
+</html>
+

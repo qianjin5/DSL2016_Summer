@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>DSLPath</title>
+  <link rel="shortcut icon" href="http://www.dynsyslab.org/wp-content/uploads/2013/08/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="static/style.css" type="text/css" media="all">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+  <div id="header">
+  	<div id="iconlinks_box">
+  		<a href="http://www.dynsyslab.org"><div class="iconlink" id="DSLicon"></div></a>
+  	</div>
+  	<div id="titlearea">
+  		<h1>DSLPath</h1>
+  	</div>
+    <div id="navlinks_box">
+      <div class="navbtn navbtn_selected" id="nav_drawingpad"><h3>DrawPad</h3></div>
+      <div class="navbtn navbtn_unselect" id="nav_gallery"><h3>Gallery</h3></div>
+    </div>
+  </div> <!--header ends-->
+
+  {% block content %}{% endblock %}
+
+  <div id="footer">
+    <p><h5>&copy;Copyright 2016: Dynamic Systems Lab</h5></p>
+    <!-- For maintanence contact Zining Zhu: zining.zhu@mail.utoronto.ca-->
+  </div>
+
+
+</body>
+
+<script src={{ url_for('static', filename='drawingpad.js') }}> </script>
+<script src={{ url_for('static', filename='plot_result.js') }}> </script>
+<script src={{ url_for('static', filename='action.js') }}> </script>
+<script src="https://d3js.org/d3.v3.min.js"></script>
+</html>
