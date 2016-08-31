@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block content %}
+<div id="content-wrap">
+	<div class="line">
+	<h4>Name your path: </h4>
+	<textarea rows="1" cols="30" id="trajName">Traj name</textarea>
+	</div>
+ 
+	<div class="line">
+	<button type="button" class="button" id="clearButton"><h3>Clear</h3></button>
+	<button type="button" class="button" id="submitButton"><h3>Submit</h3></button>
+	</div>
+	<div id="canvasDiv"></div>
+	<div class="line"><h6 id="txtHint"> </h6></div>
+
+	<div class="line" id="resultNoDNN">
+		<div id="resData_NoDNN_display"></div>
+	</div>
+
+	<div class="line" id="resultWithDNN">
+		<div id="resData_DNN_display"></div>
+	</div>
+</div> <!--content-wrap ends-->
+
+{% endblock %}

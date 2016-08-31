@@ -1,0 +1,126 @@
+body, html {
+	font-family: Helvetica, "Helvetica Neue", sans-serif;
+	font-size: 1.2em;
+	background-color: #E2F2DF; // light green
+	margin: 0;
+	padding: 0;
+	font-weight: normal;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+#header {
+	font-size: medium;
+	background: #DEE0FA; // light blue
+	border-bottom: 3px solid #DEE0FA;
+	min-height: 48px;
+
+}
+#titlearea {
+	padding-left: 20px;
+	float: left;
+}
+
+#content-wrap {
+	width: 100%;
+	padding: 10px;
+}
+
+#iconlinks_box{
+	float: left;
+	min-width: 64px;
+	margin-right: 10px;
+
+}
+
+.iconlink {
+	height: 48px;
+	width: 64px;
+	margin-top: 3px;
+	float: right; /*safari support*/
+}
+
+#DSLicon {
+	background-image:url("images/DSLicon_before.png");
+	background-size: 100% 100%;
+}
+#DSLicon:hover {
+	background-image:url("images/DSLicon_hover.png");
+	background-size: 100% 100%;
+}
+
+.button {
+	min-width: 100px;
+	min-height: 48px;
+	width: 45%;
+	background-color: #E2F2DF;
+	font-size: large;
+}
+#navlinks_box {
+	float:right;
+}
+.navbtn {
+	min-width: 80px;
+	min-height: 48px;
+	float:left;
+	margin-left: 10px;
+	padding-top: 10px;
+
+}
+
+.navbtn:hover {
+	background-color: #E2F2DF;
+}
+.navbtn_selected {
+	font-weight: bold;
+}
+.navbtn_unselect {
+	font-weight: normal;
+}
+h1, h2, h3, h4, h5, h6, textarea {
+	display: inline;
+}
+.line {
+	display: block;
+	font-size: medium;
+}
+
+#txtHint {
+	font-size: small;
+}
+
+#footer {
+	font-size: small;
+}
+/*********************************
+***    SVG plotting settings   ***
+**********************************/
+svg {
+	background-color: white;
+}
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  /*shape-rendering: crispEdges;*/
+}
+.ref_traj {
+	fill: none;
+	stroke: green;
+	stroke-width: 1.5px;
+}
+.des_traj {
+	fill: none;
+	stroke: red;
+	stroke-width: 1.5px;
+}
+.est_traj {
+	fill: none;
+	stroke: blue;
+	stroke-width: 1.5px;
+}
+.legendbox {
+	fill: none;
+	stroke: black;
+	stroke-width: 1.5px;
+}
