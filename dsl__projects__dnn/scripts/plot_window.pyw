@@ -367,7 +367,7 @@ class MainWidget(QtGui.QWidget):
 		# push to server once
 		time.sleep(0.2)
 		if not self.uploaded:
-			self.pushToDB(self.est[0:2], self.ref[0:2], self.des[0:2])    
+			self.pushToDB(self.est[0:3], self.ref[0:3], self.des[0:3])    
 			
 	def center(self):        		
 		qr = self.frameGeometry()
