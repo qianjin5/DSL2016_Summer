@@ -12,7 +12,6 @@ app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 mysql.init_app(app)
 
 
-
 def add_traj_to_db(traj_name, des_traj, curr_time, trial_time):
 	conn = mysql.connect()
 	cursor = conn.cursor()
@@ -60,13 +59,18 @@ def get_numResDNN():
 def my_str(s):
 	return "'" + s + "'"
 
+
 @app.route("/", methods = ['GET', 'POST'])
 def hello():
 	return render_template('drawpad.html')
 
 @app.route("/gallery", methods = ['GET', 'POST'])
-def render_gallery():
+def gallery():
 	return render_template('gallery.html')
+
+@app.route("/viewDetail", methods = ['GET'])
+def viewDetail():
+	return render_template('viewDetail.html')
 
 @app.route("/des_path_submission", methods = ['POST'])
 def submit():
@@ -91,7 +95,7 @@ def queryResult():
 
 
 @app.route("/get_trial_result", methods = ['GET'])
-def getTrialResult():
+def getNewestTrialResult():
 	hasdnn = request.args.get('hasdnn')
 	conn = mysql.connect()
 	cursor = conn.cursor()
@@ -140,6 +144,7 @@ def onResultSubmit():
 	avg_err = request.args.get('avgerr')
 	phys_range = request.args.get('phys_range')
 	has_dnn = request.args.get('has_dnn')
+
 	conn = mysql.connect()
 	cursor = conn.cursor()
 	if has_dnn == 'true' or has_dnn == 'True' or has_dnn == True:
@@ -155,6 +160,58 @@ def onResultSubmit():
 	cursor.close()
 	conn.close()
 
+@app.route("/get_all_trajectories", methods=['GET'])
+def get_all_trajs():
+	conn = mysql.connect()
+	cursor = conn.cursor()
+	query = ''' select traj_id, trajname, destraj, orig_range from DSLPath_tbl where traj_id>0;'''
+	cursor.execute(query)
+	data = []
+	for (traj_id, trajname, destraj, orig_range) in cursor:
+		d = {}
+		d['traj_id'] = traj_id
+		d['trajname'] = str(trajname)
+		d['destraj'] = str(destraj)
+		d['orig_range'] = str(orig_range)
+		data.append(d)
+
+	cursor.close()
+	conn.close()
+	return json.dumps(data)
+
+@app.route("/getTrajDetailById", methods=['GET'])
+def get_details_by_id():
+	traj_id = str(request.args.get('traj_id'))
+	data = {}
+	conn = mysql.connect()
+	cursor = conn.cursor()
+	query = '''select traj_id, trajname, est_traj, des_traj, ref_traj, avgerr, phys_range from DSLPath_res_nd where traj_id = %s;''' %traj_id
+	cursor.execute(query)
+	for (traj_id, trajname, est_traj, des_traj, ref_traj, avgerr, phys_range) in cursor:
+		#data['nodnn'] = (traj_id, str(trajname), str(est_traj), str(des_traj), str(ref_traj), avgerr, str(phys_range))
+		data['nodnn'] = {
+			"traj_id": traj_id,
+			"trajname": str(trajname),
+			"est_traj": str(est_traj),
+			"des_traj": str(des_traj),
+			"ref_traj": str(ref_traj),
+			"avgerr": avgerr,
+			"phys_range": str(phys_range)
+			}
+
+	query = '''select traj_id, trajname, est_traj, des_traj, ref_traj, avgerr, phys_range from DSLPath_res_dnn where traj_id = %s;''' %traj_id
+	cursor.execute(query)
+	for (traj_id, trajname, est_traj, des_traj, ref_traj, avgerr, phys_range) in cursor:
+		data['hasdnn'] = {
+			"traj_id": traj_id,
+			"trajname": str(trajname),
+			"est_traj": str(est_traj),
+			"des_traj": str(des_traj),
+			"ref_traj": str(ref_traj),
+			"avgerr": avgerr,
+			"phys_range": str(phys_range)
+			}
+	return json.dumps(data)
 
 if __name__ == "__main__":
 	app.run()

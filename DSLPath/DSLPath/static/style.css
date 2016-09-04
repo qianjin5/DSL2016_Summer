@@ -1,7 +1,7 @@
 body, html {
 	font-family: Helvetica, "Helvetica Neue", sans-serif;
 	font-size: 1.2em;
-	background-color: #E2F2DF; // light green
+	background-color: #E2F2DF;
 	margin: 0;
 	padding: 0;
 	font-weight: normal;
@@ -11,12 +11,12 @@ body, html {
 
 #header {
 	font-size: medium;
-	background: #DEE0FA; // light blue
+	background: #DEE0FA;
 	border-bottom: 3px solid #DEE0FA;
 	min-height: 48px;
-
 }
 #titlearea {
+	padding-top: 10px;
 	padding-left: 20px;
 	float: left;
 }
@@ -28,9 +28,9 @@ body, html {
 
 #iconlinks_box{
 	float: left;
+	display: block;
 	min-width: 64px;
 	margin-right: 10px;
-
 }
 
 .iconlink {
@@ -53,30 +53,10 @@ body, html {
 	min-width: 100px;
 	min-height: 48px;
 	width: 45%;
-	background-color: #E2F2DF;
+	background-color: #E2F2DF
 	font-size: large;
 }
-#navlinks_box {
-	float:right;
-}
-.navbtn {
-	min-width: 80px;
-	min-height: 48px;
-	float:left;
-	margin-left: 10px;
-	padding-top: 10px;
 
-}
-
-.navbtn:hover {
-	background-color: #E2F2DF;
-}
-.navbtn_selected {
-	font-weight: bold;
-}
-.navbtn_unselect {
-	font-weight: normal;
-}
 h1, h2, h3, h4, h5, h6, textarea {
 	display: inline;
 }
@@ -89,15 +69,52 @@ h1, h2, h3, h4, h5, h6, textarea {
 	font-size: small;
 }
 
-#footer {
-	font-size: small;
+#navlinks_box {
+	float: right;
+	padding-right: 10px;
+
+	height: 48px;
 }
-/*********************************
-***    SVG plotting settings   ***
-**********************************/
+#navlinks_box .navbtn {
+	float: left;
+	padding: 15px 5px 0 5px;
+	height: 100%;
+}
+.navbtn:hover {
+	background-color: #E2F2DF;
+}
+
+#footer {
+	padding: 0 10px 0 10px;
+	font-size: medium;
+}
+
+/**********************
+***  Gallery config ***
+**********************/
+#gallery-container {
+	width: 100%;
+}
+
+.figtitle {
+	font-weight: bold;
+}
+/********************
+***  SVG config  ***
+*********************/
 svg {
 	background-color: white;
+	font-size: medium;
 }
+
+.svg_selectable {
+
+}
+
+.svg_selectable:hover {
+	background-color: #E2F2DF;
+}
+
 .axis path,
 .axis line {
   fill: none;
@@ -118,6 +135,7 @@ svg {
 	fill: none;
 	stroke: blue;
 	stroke-width: 1.5px;
+
 }
 .legendbox {
 	fill: none;

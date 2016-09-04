@@ -17,7 +17,7 @@
   		<h1>DSLPath</h1>
   	</div>
     <div id="navlinks_box">
-      <div class="navbtn navbtn_selected" id="nav_drawingpad"><h3>DrawPad</h3></div>
+      <div class="navbtn navbtn_unselect" id="nav_drawingPad"><h3>DrawPad</h3></div>
       <div class="navbtn navbtn_unselect" id="nav_gallery"><h3>Gallery</h3></div>
     </div>
   </div> <!--header ends-->
@@ -31,9 +31,16 @@
 
 
 </body>
+<!-- helper scripts load first -->
+<script src="https://d3js.org/d3.v3.min.js"></script>
+<script src={{ url_for('static', filename='plot_result.js') }}> </script>
+<script src={{ url_for('static', filename='plot_graph.js') }}> </script>
+<!-- autorun scripts load later -->
 
 <script src={{ url_for('static', filename='drawingpad.js') }}> </script>
-<script src={{ url_for('static', filename='plot_result.js') }}> </script>
+<script src={{ url_for('static', filename='gallery.js') }}> </script>
+<script src={{ url_for('static', filename='viewDetail.js') }}> </script>
+<script src={{ url_for('static', filename='nav.js') }}> </script>
 <script src={{ url_for('static', filename='action.js') }}> </script>
-<script src="https://d3js.org/d3.v3.min.js"></script>
+
 </html>
